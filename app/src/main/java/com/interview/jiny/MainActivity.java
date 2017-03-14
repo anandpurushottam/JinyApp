@@ -35,16 +35,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startAccessibilityService(View view) {
-        Log.i("Anfklanflknalknlkfa","clicked");
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 if (!Settings.canDrawOverlays(getApplicationContext())) {
-                    Log.i("Anfklanflknalknlkfa","if");
                     Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                             Uri.parse("package:" + getPackageName()));
                     startActivityForResult(intent, 1);
                 }else {
                     if (!isMyServiceRunning(MyAccessibilityService.class)) {
-                        Log.i("Anfklanflknalknlkfa","inside");
                         if(isAccessibilitySettingsOn(getApplicationContext())){
                             startService(new Intent(getApplication(), MyAccessibilityService.class));
                         }else {
@@ -62,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
 
             }else {
                 if (!isMyServiceRunning(MyAccessibilityService.class)) {
-                    Log.i("Anfklanflknalknlkfa","inside");
                     if(isAccessibilitySettingsOn(getApplicationContext())){
                         startService(new Intent(getApplication(), MyAccessibilityService.class));
                     }else {

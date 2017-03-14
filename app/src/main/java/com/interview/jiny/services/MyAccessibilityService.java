@@ -21,7 +21,6 @@ import com.interview.jiny.Constants;
 import com.interview.jiny.R;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 /**
@@ -29,14 +28,12 @@ import java.util.Locale;
  */
 
 public class MyAccessibilityService extends AccessibilityService {
-    static final String TAG = "ExampleAccessibil";
+    static final String TAG = "ExampleAccessibily";
     private WindowManager wm;
-    private boolean isAdded, isSpoken;
+    private boolean isSpoken;
     ImageView simpleOverlay, simpleOverlay2;
     TextToSpeech t1;
-    boolean searchBarExists, buyNowExists;
     private Rect searchBarPostion, buyNowPostion;
-    private List<AccessibilityNodeInfo> accessibilityNodeInfos;
 
 
     LinearLayout containor;
@@ -64,7 +61,6 @@ public class MyAccessibilityService extends AccessibilityService {
                 WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
                 PixelFormat.TRANSPARENT);
 
-//Just trust me, this alpha thing is important.  I know it's weird on a "translucent" view.
         topButtonParams.alpha = 100;
 
         containor.setLayoutParams(topButtonParams);
@@ -84,7 +80,6 @@ public class MyAccessibilityService extends AccessibilityService {
 
 
     private void drawOverApp(Rect pos, int type) {
-        Log.i("Afnkashfhasihfasafa", "CAlled");
         if (type == 1) {
             simpleOverlay.setVisibility(View.VISIBLE);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -109,7 +104,6 @@ public class MyAccessibilityService extends AccessibilityService {
 
     @Override
     public void onAccessibilityEvent(AccessibilityEvent event) {
-        Log.i("Afnkashfhasihfasafa", "CAlled"+event.getSource());
         switch (event.getEventType()) {
 
             case AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED: {
@@ -130,7 +124,7 @@ public class MyAccessibilityService extends AccessibilityService {
                         simpleOverlay.setVisibility(View.GONE);
                         simpleOverlay2.setVisibility(View.GONE);
                     }
-                     if (event.getPackageName().equals(Constants.PAYTM_PACKAGE)) {
+                    if (event.getPackageName().equals(Constants.PAYTM_PACKAGE)) {
                         respondToPaytmApp(event);
                     }
 
@@ -204,42 +198,6 @@ public class MyAccessibilityService extends AccessibilityService {
     }
 
 
-    private void dumpNode(AccessibilityNodeInfo node, int indent) {
-
-        if (node == null) {
-            Log.v(TAG, "node is null (stopping iteration)");
-            return;
-        }
-        /*if (node.getText() != null) {
-            searchBarExists = node.findAccessibilityNodeInfosByText(Constants.FLIPKART_SEARCHBAR_TEXT).size() > 0;
-            if (searchBarExists) {
-                searchBarPostion = new Rect();
-                node.getBoundsInScreen(searchBarPostion);
-                drawOverApp(searchBarPostion);
-                Log.i(TAG, "Search exists" + " indent : " + indent);
-            }
-            buyNowExists = node.findAccessibilityNodeInfosByText(Constants.FLIPKART_BUY_NOW_TEXT).size() > 0;
-            if (buyNowExists) {
-                buyNowPostion = new Rect();
-                node.getBoundsInScreen(buyNowPostion);
-                drawOverApp(buyNowPostion);
-                Log.i(TAG, "Buy Exists" + " indent : " + indent);
-            }
-
-
-        }*/
-        for (int i = 0; i < node.getChildCount(); i++) {
-
-
-            dumpNode(node.getChild(i), indent + 1);
-        }
-
-
-        Log.i("ASnfkjsabkjfbaksjb", node.toString());
-
-    }
-
-
     private void respondToPaytmApp(AccessibilityEvent event) {
         AccessibilityNodeInfo nodeInfo = event.getSource();
         if (nodeInfo == null) {
@@ -258,14 +216,10 @@ public class MyAccessibilityService extends AccessibilityService {
     }
 
     private void clearAllFlags(String packageName) {
-        Log.i("ansdnkjnsakjdnjksanda", packageName);
-
         if (!packageName.equals(Constants.PAYTM_PACKAGE)) {
             isSpoken = false;
         }
-      /*  if (!packageName.equals(Constants.FLIPKART_PACKAGE_NAME)) {
-            simpleOverlay.setVisibility(View.GONE);
-        }*/
+
 
     }
 
