@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">JinyInterviewTest</string>
+    <string name="accessibility_service_description">This for test</string>
+    <string name="help">This app has solution for task 1 and task 2 . Just start the service and don\'t forget to turn on accessibility setting for this app.</string>
+</resources>
